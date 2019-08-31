@@ -1,0 +1,4 @@
+{
+    //Git bash, VScode终端调用git bash
+    "terminal.integrated.shell.windows": "D:/Program Files/Git/bin/bash.exe"
+}

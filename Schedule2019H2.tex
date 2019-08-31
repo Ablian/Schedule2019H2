@@ -1,0 +1,34 @@
+% !TeX::"Mode:UTF-8"
+%本文的编译方式是xetex(xelatex),编译器编译环境为UTF-8，新建*.tex文件，保存时应注意
+%Date from 2019-07-29
+%Deadline  2019-12-31
+%Schedule for the second half-year of 2019
+\documentclass[12pt]{ctexart}				%文件类型
+%自己编写宏包(.sty)，(TeXStudio)编译器不识别，但正常编译
+\usepackage{mypackage}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+	\ThisCenterWallPaper{1}{181231_ThePersistenceMemory}
+	\title{\textbf{\color{yellow}{\Huge{SCHEDULE2019 H2}}}}			%标题
+	\maketitle
+	\thispagestyle{empty}
+	\captionsetup[figure]{labelfont={bf},labelformat={default},labelsep=period,name={Fig}}
+	\renewcommand\tablename{Table}		        %重新定义表格显示为“Table”
+	%\begin{figure}[htbp]
+	%	\centering
+	%	\includegraphics[width = 0.8\textwidth]{180412_TIME}
+	%\end{figure}
+	\newpage
+	\pagenumbering{Roman}						%封面以后到正文之前页码以大写罗马数字标注
+    \tableofcontents                            %生成目录
+	\newpage
+	\pagenumbering{arabic}						%页码以阿拉伯数字显示			
+	\setcounter{page}{1}						%页码从1开始
+	\setlength{\baselineskip}{16pt}             %设置行距
+	\include{body/Schedule}
+	\clearpage									%参考文献另起一页
+	%\bibliographystyle{plain}					%基于作者名字和出版年份排序
+	%\bibliographystyle{unsrt}					%基于引用顺序排序
+	\bibliographystyle{chinesebst2005GBK}		%中文毕业论文类型，带[J][M]等类型缩写
+	\bibliography{reference/myreference171129}	%指定参考文献*.bib 文件路径
+\end{document}

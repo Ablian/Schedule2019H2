@@ -1,0 +1,164 @@
+\ProvidesPackage{mypackage}
+\RequirePackage{amssymb}						%能够显示数学推导，因为所以符号
+\RequirePackage{graphicx}						%插图区域设置
+\graphicspath{{figures/}}						%插图路径
+\RequirePackage{amsmath}						%数学公式
+\RequirePackage{ccaption}						%插图中英双语标题
+\RequirePackage{caption}						%插图标题	
+\RequirePackage{cite}							%参考文献
+\RequirePackage[super,square]{natbib}			%\cite引用的参考文献为上标
+\RequirePackage{enumerate}						%自动段落序号
+\RequirePackage{geometry}						%设置页边距
+\RequirePackage{xcolor}							%设置颜色
+\RequirePackage{array}							%绘制表格
+\RequirePackage{booktabs}						%三线表
+\RequirePackage{ulem}    						%加下划线
+\RequirePackage{makecell}
+\RequirePackage{rotating}
+\RequirePackage{multicol} 						%分栏
+\RequirePackage{multirow}						%多箭头
+\RequirePackage{subfigure}						%加子图
+\RequirePackage{float}                          %figure位置浮动[H]
+\RequirePackage{footmisc}						%多次引用同一个脚注
+\RequirePackage{textcomp}						%摄氏度，千分号等\textcelsius，\textperthousand或者$^\circ$C
+\RequirePackage{amsmath,wasysym}				%天文符号,Zodiac星座符号
+\RequirePackage{bm}				 				%希腊字母等符号加粗显示
+\geometry{a4paper,left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm,headsep=18pt}	%页面设置,headsep页眉最低处到正文最高处之间的距离
+\RequirePackage[xetex,linkcolor=blue,citecolor=blue,backref=page]{hyperref}     %参考文献与正文的双向链接
+%设置页眉页脚页码
+\RequirePackage{fancyhdr}
+\pagestyle{fancy}
+\cfoot{\small-~\thepage~-}
+%%设置页眉粗细两根双横线
+\newcommand{\makeheadrule}{%
+	\makebox[0pt][l]{\rule[0.7\baselineskip]{\headwidth}{1.8pt}}%
+	\rule[0.55\baselineskip]{\headwidth}{0.9pt}}
+\renewcommand{\headrule}{%
+	{\if@fancyplain\let\headrulewidth\plainheadrulewidth\fi
+		\makeheadrule}}
+\makeatother
+%\setlength{\topskip}{2pt}
+%设置图片标题行距
+\setlength{\abovecaptionskip}{6pt}
+\setlength{\belowcaptionskip}{0pt}
+\date{}									
+%设置item间距
+%五星进度表
+\RequirePackage{tikz}
+\usetikzlibrary{mindmap,backgrounds}
+\usetikzlibrary{shapes.geometric,calc}
+\usetikzlibrary{patterns}
+\usetikzlibrary{calc}
+%绿五星%%%%%%
+\newcommand\starrate[2]{
+	\pgfmathsetmacro\pgfxa{#1+1}
+	\tikzstyle{scorestars}=[star, star points=5, star point ratio=2.25, draw,inner sep=0.15em,anchor=outer point 3]
+	\begin{tikzpicture}[baseline]
+	\foreach \i in {1,...,#2} {
+		\pgfmathparse{(\i<=#1?"green":"white")}	 % &lt;转义字符<
+		\edef\starcolor{\pgfmathresult}
+		\draw (\i*1em,0) node[name=star\i,scorestars,fill=\starcolor] {};
+	}
+	\pgfmathparse{(#1>int(#1)?int(#1+1):0}		 % &gt;转义字符>
+	\let\partstar=\pgfmathresult
+	\ifnum\partstar>0
+	\pgfmathsetmacro\starpart{#1-(int(#1))}
+	\path [clip] ($(star\partstar.outer point 3)!(star\partstar.outer point 2)!(star\partstar.outer point 4)$) 
+	rectangle
+	($(star\partstar.outer point 2 |- star\partstar.outer point 1)!\starpart!(star\partstar.outer point 1 -| star\partstar.outer point 5)$);
+	\fill (\partstar*1em,0) node[scorestars,fill=yellow]{};
+	\fi
+	\end{tikzpicture}}
+%红五星%%%%%%
+\newcommand\starrateRed[2]{
+	\pgfmathsetmacro\pgfxa{#1+1}
+	\tikzstyle{scorestars}=[star, star points=5, star point ratio=2.25, draw,inner sep=0.15em,anchor=outer point 3]
+	\begin{tikzpicture}[baseline]
+	\foreach \i in {1,...,#2} {
+		\pgfmathparse{(\i<=#1?"red":"white")}		% &lt;转义字符<
+		\edef\starcolor{\pgfmathresult}
+		\draw (\i*1em,0) node[name=star\i,scorestars,fill=\starcolor] {};
+	}
+	\pgfmathparse{(#1>int(#1)?int(#1+1):0}			% &gt;转义字符>
+	\let\partstar=\pgfmathresult
+	\ifnum\partstar>0
+	\pgfmathsetmacro\starpart{#1-(int(#1))}
+	\path [clip] ($(star\partstar.outer point 3)!(star\partstar.outer point 2)!(star\partstar.outer point 4)$) 
+	rectangle($(star\partstar.outer point 2 |- star\partstar.outer point 1)!\starpart!(star\partstar.outer point 1 -| star\partstar.outer point 5)$);
+	\fill (\partstar*1em,0) node[scorestars,fill=red]{};
+	\fi
+	\end{tikzpicture}}
+%黑五星
+\newcommand\starrateBlack[2]{
+	\pgfmathsetmacro\pgfxa{#1+1}
+	\tikzstyle{scorestars}=[star, star points=5, star point ratio=2.25, draw,inner sep=0.15em,anchor=outer point 3]
+	\begin{tikzpicture}[baseline]
+	\foreach \i in {1,...,#2} {
+		\pgfmathparse{(\i<=#1?"red":"black")}		% &lt;转义字符<
+		\edef\starcolor{\pgfmathresult}
+		\draw (\i*1em,0) node[name=star\i,scorestars,fill=\starcolor] {};
+	}
+	\pgfmathparse{(#1>int(#1)?int(#1+1):0}			% &gt;转义字符>
+	\let\partstar=\pgfmathresult
+	\ifnum\partstar>0
+	\pgfmathsetmacro\starpart{#1-(int(#1))}
+	\path [clip] ($(star\partstar.outer point 3)!(star\partstar.outer point 2)!(star\partstar.outer point 4)$) 
+	rectangle($(star\partstar.outer point 2 |- star\partstar.outer point 1)!\starpart!(star\partstar.outer point 1 -| star\partstar.outer point 5)$);
+	\fill (\partstar*1em,0) node[scorestars,fill=red]{};
+	\fi
+	\end{tikzpicture}}
+%黄五星
+\newcommand\starrateYellow[2]{
+	\pgfmathsetmacro\pgfxa{#1+1}
+	\tikzstyle{scorestars}=[star, star points=5, star point ratio=2.25, draw,inner sep=0.15em,anchor=outer point 3]
+	\begin{tikzpicture}[baseline]
+	\foreach \i in {1,...,#2} {
+		\pgfmathparse{(\i<=#1?"yellow":"white")}	% &lt;转义字符<
+		\edef\starcolor{\pgfmathresult}
+		\draw (\i*1em,0) node[name=star\i,scorestars,fill=\starcolor] {};
+	}
+	\pgfmathparse{(#1>int(#1)?int(#1+1):0}			% &gt;转义字符>
+	\let\partstar=\pgfmathresult
+	\ifnum\partstar>0
+	\pgfmathsetmacro\starpart{#1-(int(#1))}
+	\path [clip] ($(star\partstar.outer point 3)!(star\partstar.outer point 2)!(star\partstar.outer point 4)$) 
+	rectangle
+	($(star\partstar.outer point 2 |- star\partstar.outer point 1)!\starpart!(star\partstar.outer point 1 -| star\partstar.outer point 5)$);
+	\fill (\partstar*1em,0) node[scorestars,fill=yellow]{};
+	\fi
+	\end{tikzpicture}}
+%Quadrant One 
+\newcommand{\ncquaone}{\rm{\textbf{CRISIS-DO}}}
+%Quadrant Two 
+\newcommand{\ncquatwo}{\rm{\textbf{PRODUCTIVITY-PLAN}}}
+%Quadrant Three 
+\newcommand{\ncquathree}{\textbf{DISTRACTION-DELEGATE}}
+%Quadrant Four 
+\newcommand{\ncquafour}{\rm{\textbf{WASTE-ELIMINATE}}}
+%Finishing mask Red
+\newcommand{\rightdone}{\hfill{\color{red}\Huge\CheckedBox}}
+\newcommand{\rightundone}{\hfill{\color{red}\Huge\XBox}}
+%Finishing mask Black
+\newcommand{\rightdoneBlack}{\hfill{\color{black}\Huge\CheckedBox}}
+\newcommand{\rightundoneBlack}{\hfill{\color{black}\Huge\XBox}}
+%Error mask
+\newcommand{\errormask}{\hfill{\huge\maltese}}
+%Error concrete
+\newcommand{\errorconcrete}{\hfill{\color{black}\Huge\XBox}}
+%Roman number, Romanno for Upper romanno for lower
+\newcommand{\Romanno}[1]{\uppercase\expandafter{\romannumeral#1}}
+\newcommand{\romanno}[1]{\romannumeral#1}
+\RequirePackage{verbatim}
+\usetikzlibrary{%
+	calc,%
+	decorations.pathmorphing,%
+	fadings,%
+	shadings%
+}
+\RequirePackage{wallpaper}
+%\ThisCenterWallPaper%只在当前页插入背景图片
+%\LRCornerWallPaper%每一页的右下角插入背景图片
+%\URCornerWallPaper%每一页的右上角插入背景图片
+%背景颜色,RGB{254,241,224}
+\definecolor{MyFTPink}{rgb}{0.996,0.945,0.878}
+
